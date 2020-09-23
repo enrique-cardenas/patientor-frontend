@@ -1,5 +1,13 @@
 # Patientor - frontend
 
+This repo contains my solution to the frontend portion of [full stack open's](https://fullstackopen.com/en/part9/react_with_types) part 9 Typescript course.
+
+The program is meant to be a medical record application for doctors who handle diagnoses and basic health information of their patients.
+
+The backend portion can be found [here](https://github.com/enrique-cardenas/patientor-backend)
+
+
+  
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
