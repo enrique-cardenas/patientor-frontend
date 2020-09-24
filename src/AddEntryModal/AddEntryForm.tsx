@@ -50,9 +50,6 @@ export const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
         if (!values.type) {
           errors.type = requiredError;
         }
-        if (!values.healthCheckRating) {
-          errors.healthCheckRating = requiredError;
-        }
         return errors;
       }}
     >
@@ -83,7 +80,7 @@ export const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
               diagnoses={Object.values(diagnoses)}
             /> 
             <Field
-              label="healthCheckRating"
+              label="Health Check Rating"
               name="healthCheckRating"
               component={NumberField}
               min={0}

@@ -81,7 +81,9 @@ const HealthCheckEntryView: React.FC<{ entry: HealthCheckEntry }> = ({entry}) =>
       case HealthCheckRating.LowRisk:
         return <Icon name="heart" color="yellow"/>;
       case HealthCheckRating.HighRisk:
+        return <Icon name="heart" color="red"/>;
       case HealthCheckRating.CriticalRisk:
+        return <Icon name="heart" color="purple"/>;
       default:
         return null;
     }
