@@ -2,20 +2,15 @@ import React from "react";
 import { Grid, Button } from "semantic-ui-react";
 import { Field, Formik, Form } from "formik";
 
-import { TextField, NumberField, DiagnosisSelection } from "./FormField";
-import { HealthCheckEntry, HealthCheckRating } from "../types";
-import { useStateValue } from "../state";
+import { TextField, NumberField, DiagnosisSelection } from "../FormField";
+import { HealthCheckEntry, HealthCheckRating } from "../../types";
+import { useStateValue } from "../../state";
 
 
-
-/*
- * use type Patient, but omit id and entries,
- * because those are irrelevant for new patient object.
- */
-export type EntryFormValues = Omit<HealthCheckEntry, "id">;
+export type HealthCheckEntryFormValues = Omit<HealthCheckEntry, "id">;
 
 interface Props {
-  onSubmit: (values: EntryFormValues) => void;
+  onSubmit: (values: HealthCheckEntryFormValues) => void;
   onCancel: () => void;
 }
 

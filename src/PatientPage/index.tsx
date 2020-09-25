@@ -10,8 +10,9 @@ import { Patient, Entry } from "../types";
 import { Card } from 'semantic-ui-react';
 import EntryDetails from "./EntryDetails";
 
-import AddEntryModal from "../AddEntryModal";
-import { EntryFormValues } from "../AddEntryModal/AddEntryForm";
+import AddHealthCheckEntryModal from "../EntryModals/AddHealthCheckEntryModal";
+import AddOccupationalHealthcareEntryModal from "../EntryModals/AddOccupationalHealthcareEntryModal";
+import { NewEntry as EntryFormValues } from "../types";
 
 
 
@@ -20,24 +21,52 @@ const PatientPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [{ patients }, dispatch] = useStateValue();
 
-  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const [occupationalHealthCareModalOpen, setOccupationalHealhCareModal] = 
+    React.useState<boolean>(false);
+
+  const [healthCheckEntryModalOpen, setHealthCheckEntryModal] = 
+    React.useState<boolean>(false);
+
   const [error, setError] = React.useState<string | undefined>();
 
-  const openModal = (): void => setModalOpen(true);
+  const openOccupationalHeatlhCareModal = 
+    (): void => setOccupationalHealhCareModal(true);
 
-  const closeModal = (): void => {
-    setModalOpen(false);
+  const openHealthCheckEntryModal = 
+    (): void => setHealthCheckEntryModal(true);
+
+  const closeOccupationalHealthCareModal = (): void => {
+    setOccupationalHealhCareModal(false);
     setError(undefined);
   };
 
-  const submitNewEntry = async (values: EntryFormValues) => {
+  const closeOpenHealthCheckEntryModal = (): void => {
+    setHealthCheckEntryModal(false);
+    setError(undefined);
+  };
+
+  const submitNewOccupationalHealthCareEntry = async (values: EntryFormValues) => {
     try {
       const { data: newEntry } = await axios.post<Entry>(
         `${apiBaseUrl}/patients/${id}/entries`,
         values
       );
       dispatch(addEntry(newEntry, id));
-      closeModal();
+      closeOccupationalHealthCareModal();
+    } catch (e) {
+      console.error(e.response.data);
+      setError(e.response.data.error);
+    }
+  };
+
+  const submitHealthCheckEntry = async (values: EntryFormValues) => {
+    try {
+      const { data: newEntry } = await axios.post<Entry>(
+        `${apiBaseUrl}/patients/${id}/entries`,
+        values
+      );
+      dispatch(addEntry(newEntry, id));
+      closeOpenHealthCheckEntryModal();
     } catch (e) {
       console.error(e.response.data);
       setError(e.response.data.error);
@@ -89,13 +118,21 @@ const PatientPage: React.FC = () => {
           <p>occupation: {patient.occupation}</p>
         </div>
         {patient.entries && patient.entries.length > 0 && displayEntries()}
-        <AddEntryModal
-          modalOpen={modalOpen}
-          onSubmit={submitNewEntry}
+        <AddOccupationalHealthcareEntryModal
+          modalOpen={occupationalHealthCareModalOpen}
+          onSubmit={submitNewOccupationalHealthCareEntry}
           error={error}
-          onClose={closeModal}
+          onClose={closeOccupationalHealthCareModal}
         />
-        <Button onClick={() => openModal()}>Add New Entry</Button>
+        <AddHealthCheckEntryModal
+          modalOpen={healthCheckEntryModalOpen}
+          onSubmit={submitHealthCheckEntry}
+          error={error}
+          onClose={closeOpenHealthCheckEntryModal}
+        />
+
+        <Button onClick={() => openOccupationalHeatlhCareModal()}>Add New Occupational Healthcare Entry</Button>
+        <Button onClick={() => openHealthCheckEntryModal()}>Add New Health Check Entry</Button>
       </div>
     );
   };
